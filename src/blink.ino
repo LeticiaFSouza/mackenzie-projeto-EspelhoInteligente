@@ -1,29 +1,53 @@
-/*
-  Blink
-  Turns on an LED on for one second, then off for one second, repeatedly.
+//<script src="speechapi.js"></script>
 
-  Most Arduinos have an on-board LED you can control. On the Uno and
-  Leonardo, it is attached to digital pin 13. If you're unsure what
-  pin the on-board LED is connected to on your Arduino model, check
-  the documentation at http://www.arduino.cc
+// o que tem na js: ------
+// primeiro ativar o microfone
+window.addEventListener("DOMContentLoaded",function(){
+// variavel recebe a transcrição do audio;  
+ var btn_gravacao = document.querySelector('#btn_gravar_audio');
+// variavel guarda oque esta sendo falado;
+var transcrição_audio='';
+ // variavel verifica se esta gravando ---
+esta_gravando = false;
+// veifica se o navegador tem permissao para utilizarr apis
 
-  This example code is in the public domain.
- 
-  modified 8 May 2014
-  by Scott Fitzgerald
- */
+if(window.speechRecognition || window.webkitSpeechRecognition){
 
+// verificar qual biblioteeca esta sendo usada. Utilizando variavel.
 
-// the setup function runs once when you press reset or power the board
-void setup() {
-  // initialize digital pin 13 as an output.
-  pinMode(13, OUTPUT);
+var speecch_api = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+// instanciar objeto da api:
+var recebe_audio = new speech_api();
+
+// gravação contínua ----
+recebe_audio.continuous =false;
+// especifica se resultado final pode ser alterado----
+recebe_audio.interimResults=false;
+recebe_audio.lang = "pt-BR";
+
+// metodos de controle da api -----
+recebe_audio.onstart = function(){
+esta_gravando = true;
+btn_gravacao.innerHTML = 'gravando';
+};
+
+recebe_audio.onend= function(){
+    esta_gravando = false;
+   btn_gravacao.innerHTML = 'iniciar gravacao';
+};
+
+// capta o resultado da gravação do audio
+recebe_audio.onresult= function(event){
+    console.log(event);
+};
+
+btn_gravacao.addEventListener('click',function(e){
+recebe_audio.start();
+
+}, false);
+
+}else{
+    console.log("navegador nao tem suporte para api");
 }
-
-// the loop function runs over and over again forever
-void loop() {
-  digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(1000);              // wait for a second
-  digitalWrite(13, LOW);    // turn the LED off by making the voltage LOW
-  delay(1000);              // wait for a second
-}
+}, false);
