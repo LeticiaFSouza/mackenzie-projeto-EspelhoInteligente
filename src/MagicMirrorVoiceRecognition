@@ -1,0 +1,240 @@
+!DOCTYPE html>
+<html>
+	<head>
+		
+		<title>Magic Mirror</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="estilo.css"/>
+		 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>	
+		<script src="jquery.rss.min.js"></script>
+	<!--	<script src="speech_api.js"></script>-->
+
+	</head>
+	<!-- <body onload=startclock() bgcolor="#EFEFEF"> -->
+	<body onload=startclock()>
+				<center>
+					<script language="JavaScript">
+
+						document.write("<font color='#000000' size='4' face='arial'>")
+						var mydate=new Date()
+						var year=mydate.getYear()
+						if (year<2000)
+						year += (year < 1900) ? 1900 : 0
+						var day=mydate.getDay()
+						var month=mydate.getMonth()
+						var daym=mydate.getDate()
+						if (daym<10)
+						daym="0"+daym
+						var dayarray=new Array("Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado")
+						var montharray=new Array(" de Janeiro de "," de Fevereiro de "," de Março de ","de Abril de ","de Maio de ","de Junho de","de Julho de ","de Agosto de ","de Setembro de "," de Outubro de "," de Novembro de "," de Dezembro de ")
+						document.write("   "+dayarray[day]+", "+daym+" "+montharray[month]+year+" ")
+						document.write("</b></i></font>")
+					</script>	
+				</center>
+			
+				<SCRIPT language=JavaScript>
+					var timeID=null;
+					var timerRunning=false;
+					function stopclock (){
+							if(timerRunning)
+									clearTimeout(timerID);
+							timerRunning=false;
+							}
+					function startclock (){
+							stopclock ();
+							//showtime ();
+							timerID = setInterval("showtime()",1000);
+							}
+					function showtime() {
+							var now=new Date();
+							var hours= now.getHours();
+							var minutes= now.getMinutes();
+							var seconds= now.getSeconds();
+							var timeValue=""+ hours;
+							timeValue += ((minutes<10) ? ":0" : ":") + minutes
+							timeValue += ((seconds<10) ? ":0" : ":") + seconds
+					 
+							document.clock.face.value= timeValue
+							//timerID = setTimeout("showtime()",1000);
+							timerRunning = true;
+							}
+				</SCRIPT>
+				<script>
+					
+					jQuery(function($) {
+					$("#rss-feeds").rss("http://pox.globo.com/rss/g1/",
+						{
+							entryTemplate:'<div>{date} <div style="color: #b31619; 	padding-left: -10%;">{title}</div></div></br>'
+						},
+						{dateLocale: 'pt-BR'},
+						{dateFormat: 'MMMM DD, YYYY'}
+						)
+					})
+				</script>
+				<script >
+					// o que tem na js: ------
+					// primeiro ativar o microfone
+						window.addEventListener("DOMContentLoaded",function(){
+										
+							if(window.speechRecognition || window.webkitSpeechRecognition  || window.mozSpeechRecognition || window.msSpeechRecognition){
+
+								//var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
+								//var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
+
+								//var words = [ 'desativar' , 'desativa' , 'remover', 'remove', 'apagar', 'apaga', 'limpar', 'limpa', 'notícias', 'notícia', 'clima', 'previsão', 'tempo', 'trânsito', 'congestionamento' ];
+								//var grammar = '#JSGF V1.0; grammar words; public <word> = ' + words.join(' | ') + ' ;'
+
+								// instanciar objeto da api:
+								var recebe_audio = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+								//var speechRecognitionList = new SpeechGrammarList();
+								//speechRecognitionList.addFromString(grammar, 1);
+
+								// gravação contínua ----
+								recebe_audio.continuous =true;
+								// especifica se resultado final pode ser alterado----
+								//recebe_audio.interimResults=false;
+								recebe_audio.interimResults=true;
+								recebe_audio.lang = "pt-BR";
+								recebe_audio.maxAlternatives = 1;
+/*
+								// comandos para mostrar ou esconder cada widget
+								var commands = {
+									'noticias': function() {
+										window.alert("NOTICIAS");
+										document.getElementById("noticia").style.display = "block";
+									},
+									'clima': function() {
+										document.getElementById("clima").style.display = "block";
+									},
+								'transito': function() {
+								  document.getElementById("transito").style.display = "block";
+								}
+							};
+							// Add our commands to annyang
+							annyang.addCommands(commands);
+*/
+
+							recebe_audio.start();
+
+							// capta o resultado da gravação do audio
+							recebe_audio.onresult= function(event){
+								//console.log(event.results[0][0].transcript);
+								
+								var last = event.results.length - 1;
+								var cmdArray = event.results[last];
+								
+								//for(var cntRslts = 0; cntRslts < event.results.length; cntRslts++) {
+								
+									//var cmdArray = event.results[cntRslts];
+									
+									for(var cmdCnt = 0; cmdCnt < cmdArray.length; cmdCnt++) {
+														
+										if(cmdArray) {
+											
+											var command = cmdArray[cmdCnt].transcript.trim().toLowerCase();
+											console.log(command);
+											$('.transcription').text(command);
+											
+											//if(command === 'desativar' || command === 'desativa' 
+											//	|| command === 'remover' || command === 'remove' 
+											//	|| command === 'apagar'  || command === 'apaga'  
+											//	|| command === 'limpar' || command === 'limpa' ) {
+											//		document.getElementById("rss-feeds").style.display = "none";
+											//		document.getElementById("clima").style.display = "none";
+											//		document.getElementById("transito").style.display = "none";
+											//}
+											//
+											//if(command === 'notícias' || command === 'notícia'){
+											//	
+											//	document.getElementById("rss-feeds").style.display = "block";
+											//	
+											//} else if (command === 'clima' || command === 'previsão' ||command === 'tempo'){
+											//
+											//	document.getElementById("clima").style.display = "block";
+											//	
+											//} else if (command === 'trânsito' || command === 'congestionamento'){
+											//
+											//	document.getElementById("transito").style.display = "block";
+											//	
+											//}
+											
+											if(command.indexOf('desativar') >= 0 || command.indexOf('desativa') >= 0
+												|| command.indexOf('remover') >= 0 || command.indexOf('remove') >= 0
+												|| command.indexOf('apagar') >= 0  || command.indexOf('apaga') >= 0
+												|| command.indexOf('limpar') >= 0 || command.indexOf('limpa') >= 0 ) {
+													document.getElementById("rss-feeds").style.display = "none";
+													document.getElementById("clima").style.display = "none";
+													document.getElementById("transito").style.display = "none";
+											}
+											
+											if(command.indexOf('notícias') >= 0 || command.indexOf('notícia') >= 0){
+												
+												document.getElementById("rss-feeds").style.display = "block";
+												
+											} else if (command.indexOf('clima') >= 0 || command.indexOf('previsão') >= 0 ||command.indexOf('tempo') >= 0){
+											
+												document.getElementById("clima").style.display = "block";
+												
+											} else if (command.indexOf('trânsito') >= 0 || command.indexOf('congestionamento') >= 0){
+											
+												document.getElementById("transito").style.display = "block";
+												
+											}
+										}
+									}
+								//}
+							};		
+							
+							recebe_audio.onnomatch = function(event) {
+								console.log('No Match!');
+							}
+							
+							recebe_audio.onspeechend = function() {
+								console.log('Speech has stopped being detected');
+							}
+							
+							recebe_audio.onerror = function(event) {
+								console.log('Speech recognition error detected: ' + event.error);
+							}				
+						};
+						});
+				</script>
+		 
+		<FORM name=clock onsubmit=0>
+			<DIV align="center"><INPUT type=button value="" name=face></DIV>
+		</FORM>
+				
+			<p class="border">
+				<div class = "previsao" id="clima">
+					<iframe allowtransparency="true" 
+					marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" 
+					src="https://www.cptec.inpe.br/widget/widget.php?p=244&w=v&c=d2ceeb&f=ffffff" 
+					height="350px" width="192px">
+					</iframe>
+						<!--<iframe 
+							allowtransparency="true" 
+							marginwidth="0"	marginheight="0" hspace="0" vspace="0" 
+							frameborder="0" scrolling="no" 
+							src="https://www.cptec.inpe.br/widget/widget.php?p=244&w=p&c=d5def5&f=a3c1e0" height="154px" width="120px">
+						</iframe> -->
+						
+						<br></br><br></br>					
+				</div>
+				 <div id="transcription"></div>
+
+				
+				<div class="noticia" id="rss-feeds" ></div>
+				
+				<div class = "transito" id="transito">
+					<iframe 
+						src="https://embed.waze.com/iframe?zoom=12&lat=45.6906304&lon=-120.810983"
+						width="300" height="400">
+					</iframe>
+				</div>
+			</p>		
+			</body>
+	
+		</html>
+	
