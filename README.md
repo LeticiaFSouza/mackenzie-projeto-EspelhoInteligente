@@ -7,7 +7,7 @@
 * Leticia Souza
 * Nathalia Sellis
 * Rafael Acayaba
-* Fernando 
+* Fernando Martinho Furtado
 
 ## Descrição resumida do projeto
 
