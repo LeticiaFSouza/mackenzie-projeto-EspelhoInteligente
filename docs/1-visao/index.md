@@ -1,75 +1,37 @@
 # Documento de Visão do Projeto "NOME DO PROJETO"
 
-Este documento apresenta uma solução de software para o projeto *"NOME DO PROJETO"*, 
+Este documento apresenta uma solução de software para o projeto *"Espelho inteligente"*, 
 apresentando os problemas a serem solucionados, as necessidades dos principais envolvidos, o alcance do projeto e as funcionalidades esperadas.
 
 ## Objetivos
 
-* Objetivo 1
-* Objetivo 2
-* Objetivo 3
-* etc.
+* Facilitar a busca de informações em momentos em que o usário não possa utilizar o celular;
+* Otimização de tempo;
+* Busca de informações de fontes confiáveis.
+
 
 ## Problema
 
-* Descrição do problema: ___
-* Quem é afetado pelo problema: ____
-* Impacto no negócio: ___
-* Benefícios de uma boa solução: ___
+* Descrição do problema: Nos dias de hoje, diante da grande quantidade de informações que recebemos e da velocidade que precisamos buscá-las, ter ao alcance um facilitador que nos permita transformar momentos de pressa e de ansiedade mais ágeis no dia a dia. 
+* Quem é afetado pelo problema: Público em geral.
+* Benefícios de uma boa solução: Melhoria na qualidade de vida.
 
-## Definições, abreviações e outros termos do domínio do problema
-
-* Definição 1
-* Definição 2
-* Definição 3
-* etc.
 
 ## Integração com outros sistemas
 
-* Sistema externo 1
-* Sistema externo 2
-* Sistema externo 3
-* etc.
+* Aplicação Waze
+* Site G1
+* Site Clima Tempo
  
 ## Interessados
 
-* Tipo de interessado 1
-* Tipo de interessado 2
-* Tipo de interessado 3
-* etc.
-
-## Usuários
-
-* Tipo de usuário 1
-* Tipo de usuário 2
-* Tipo de usuário 3
-* etc.
+* Mulheres em geral
+* Homens em geral
 
 ## Funcionalidades do produto
 
-* Funcionalidade 1
-* Funcionalidade 2
-* etc.
+* Checagem de informações solicitadas pelo usuário
 
 ## Restrições do projeto
 
-* Restrição 1
-* Restrição 2
-* Restrição 3
-* etc.
-
-## Protótipos
-
-### Protótipos para funcionalidade 1
-
-![](proto1.png)
-
-Fonte: Exemplos gerados pelo assistente do **Enterprise Architect**.
-
-### Protótipos para funcionalidade 2
-
-![](proto2.png)
-
-Fonte: Exemplos gerados pelo assistente do **Enterprise Architect**.
-
-### Protótipos para funcionalidade N
+* Estar restrito a perguntas específicas
