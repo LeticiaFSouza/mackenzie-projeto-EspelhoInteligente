@@ -36,6 +36,4 @@ Por fim, é utilizado um espelho.
 _______________________________________
 Obs:
 
-`src/` contem os códigos desenvolvidos
-
-`doc/` documentação do projeto
+`doc/` documentação do projeto e contem os códigos desenvolvidos
